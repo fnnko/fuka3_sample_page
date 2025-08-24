@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2025年度 生徒会選挙・紹介ページ</title>
+  <meta name="description" content="2025年度 生徒会選挙の候補者紹介、日程、投票方法、よくある質問を掲載。" />
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --card: #ffffff;
+      --text: #1b1f24;
+      --muted: #5b6470;
+      --primary: #3b82f6;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --shadow: 0 10px 20px rgba(0,0,0,.08);
+      --radius: 16px;
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --primary: #60a5fa;
+      --accent: #34d399;
+      --danger: #f87171;
+      --shadow: 0 10px 24px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", "Noto Sans JP", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    [data-theme="dark"] header { background: rgba(17,24,39,.7); border-color: rgba(255,255,255,.08); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+    .brand { display: flex; gap: 10px; align-items: center; font-weight: 800; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: var(--shadow); }
+    .navlinks { display: flex; gap: 14px; flex-wrap: wrap; }
+    .navlinks a { padding: 8px 12px; border-radius: 99px; background: transparent; border: 1px solid rgba(0,0,0,.08); color: inherit; text-decoration: none; }
+    [data-theme="dark"] .navlinks a { border-color: rgba(255,255,255,.12); }
+    .navactions { display: flex; gap: 8px; align-items: center; }
+    .btn { cursor: pointer; padding: 10px 14px; border-radius: 12px; border: none; font-weight: 700; }
+    .btn-primary { background: var(--primary); color: #fff; box-shadow: var(--shadow); }
+    .btn-ghost { background: transparent; border: 1px solid rgba(0,0,0,.08); }
+    [data-theme="dark"] .btn-ghost { border-color: rgba(255,255,255,.12); color: var(--text);}    
+
+    .hero { padding: 28px 0 6px; }
+    .hero-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; display: grid; grid-template-columns: 1.3fr 2fr; gap: 18px; align-items: center; }
+    @media (max-width: 800px){ .hero-card { grid-template-columns: 1fr; } }
+    .badge { display: inline-block; padding: 6px 10px; font-size: 12px; border-radius: 999px; border: 1px solid rgba(0,0,0,.08); }
+    [data-theme="dark"] .badge { border-color: rgba(255,255,255,.12); }
+    .hero h1 { margin: 6px 0 8px; font-size: clamp(22px, 3.4vw, 32px); }
+    .hero p { margin: 0; color: var(--muted); }
+
+    /* Candidates */
+    section { padding: 26px 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 26px); margin: 0 0 12px; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 900px){ .grid { grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 620px){ .grid { grid-template-columns: 1fr; } }
+    .candidate { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; }
+    .avatar { width: 96px; height: 96px; border-radius: 14px; background: linear-gradient(135deg,#e5e7eb,#cbd5e1); display: grid; place-items: center; font-weight: 800; color: #111; }
+    [data-theme="dark"] .avatar { background: linear-gradient(135deg,#334155,#1f2937); color: #e5e7eb; }
+    .tags { display:flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(59,130,246,.12); color: var(--primary); }
+
+    .controls { display:flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .input, select { padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(0,0,0,.12); background: transparent; color: inherit; }
+    [data-theme="dark"] .input, [data-theme="dark"] select { border-color: rgba(255,255,255,.16); }
+
+    /* Timeline */
+    .timeline { display: grid; gap: 10px; }
+    .timeline .row { display: grid; grid-template-columns: 130px 1fr; gap: 12px; align-items: start; }
+    @media (max-width: 560px){ .timeline .row { grid-template-columns: 1fr; } }
+    .pill { display:inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(16,185,129,.12); color: var(--accent); font-weight: 700; }
+
+    /* Rules */
+    .list { margin: 0; padding-left: 18px; }
+
+    /* FAQ */
+    details { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
+    details + details { margin-top: 10px; }
+
+    /* Footer */
+    footer { margin: 24px 0 40px; color: var(--muted); font-size: 14px; }
+
+    /* Modal */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: none; place-items:center; padding: 16px; }
+    .modal { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); width: min(720px, 100%); max-height: 85vh; overflow: auto; }
+    .modal header { position: sticky; top: 0; background: transparent; border: none; }
+    .modal .body { padding: 18px; }
+    .modal .close { position: absolute; top: 10px; right: 10px; }
+
+    /* Print */
+    @media print {
+      header, .navactions, .controls, .btn, .modal-backdrop { display: none !important; }
+      .card, details { box-shadow: none; border: 1px solid #ddd; }
+      body { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="ページ内ナビゲーション">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div>〇〇高等学校</div>
+          <small style="color:var(--muted)">2025年度 生徒会選挙</small>
+        </div>
+      </div>
+      <nav class="navlinks">
+        <a href="#candidates">候補者</a>
+        <a href="#schedule">スケジュール</a>
+        <a href="#rules">ルール</a>
+        <a href="#howto">投票方法</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">問い合わせ</a>
+      </nav>
+      <div class="navactions">
+        <button id="themeToggle" class="btn btn-ghost" aria-pressed="false" aria-label="テーマ切替">🌓 テーマ</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ 印刷</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-card" role="region" aria-labelledby="hero-title">
+        <div>
+          <span class="badge">お知らせ</span>
+          <h1 id="hero-title">2025年度 生徒会選挙・紹介ページ</h1>
+          <p>投票日は <strong>9月20日(金)</strong>。候補者の公約や日程を確認して、必ず投票に参加しましょう。</p>
+          <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#candidates">候補者を見る</a>
+            <a class="btn btn-ghost" href="#howto">投票のやり方</a>
+          </div>
+        </div>
+        <div class="card" aria-label="重要日程の要点">
+          <div class="timeline">
+            <div class="row"><div class="pill">9/5(木)</div><div>立会演説会</div></div>
+            <div class="row"><div class="pill">9/12(金)</div><div>教室討論会</div></div>
+            <div class="row"><div class="pill">9/20(金)</div><div><strong>投票日（LHR内）</strong></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Candidates -->
+    <section id="candidates" aria-labelledby="cand-title">
+      <h2 id="cand-title">候補者紹介</h2>
+      <div class="controls" role="region" aria-label="候補者の検索と絞り込み">
+        <input id="search" class="input" type="search" placeholder="名前・キーワードで検索" aria-label="候補者検索" />
+        <select id="gradeFilter" aria-label="学年で絞り込み">
+          <option value="">すべての学年</option>
+          <option value="1">1年</option>
+          <option value="2">2年</option>
+          <option value="3">3年</option>
+        </select>
+        <select id="positionFilter" aria-label="役職で絞り込み">
+          <option value="">すべての役職</option>
+          <option value="会長">会長</option>
+          <option value="副会長">副会長</option>
+          <option value="書記">書記</option>
+          <option value="会計">会計</option>
+        </select>
+        <button class="btn" id="clearFilters">絞り込みをクリア</button>
+      </div>
+
+      <div class="grid" id="candidateGrid">
+        <!-- Candidate Card Sample 1 -->
+        <article class="card candidate" data-grade="3" data-position="会長" data-keywords="清潔 文化祭 改善 ICT">
+          <div class="avatar" aria-hidden="true">A</div>
+          <div>
+            <h3 style="margin:0 0 4px">青山 葵（3年）<small style="color:var(--muted); font-weight:400">／ 会長候補</small></h3>
+            <p style="margin:6px 0">「<strong>生徒主体で動く学校</strong>」をテーマに、文化祭の企画枠拡大と校内Wi‑Fi改善を公約に掲げます。</p>
+            <div class="tags" aria-label="主な公約タグ"><span class="tag">文化祭強化</span><span class="tag">ICT整備</span><span class="tag">掃除当番見直し</span></div>
+            <div style="margin-top:8px; display:flex; gap:8px;">
+              <button class="btn btn-ghost" data-modal-open="aoyama">詳しく見る</button>
+              <a class="btn btn-primary" href="#howto">投票方法</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Candidate Card Sample 2 -->
+        <article class="card candidate" data-grade="2" data-position="副会長" data-keywords="部活 防災 防犯 交流">
+          <div class="avatar" aria-hidden="true">B</div>
+          <div>
+            <h3 style="margin:0 0 4px">池田 晴（2年）<small style="color:var(--muted); font-weight:400">／ 副会長候補</small></h3>
+            <p style="margin:6px 0">部活動横断の交流戦や、防災・防犯の意識向上を進めます。朝の正門挨拶運動も継続。</p>
+            <div class="tags"><span class="tag">部活支援</span><span class="tag">防災</span><span class="tag">交流強化</span></div>
+            <div style="margin-top:8px; display:flex; gap:8px;">
+              <button class="btn btn-ghost" data-modal-open="ikeda">詳しく見る</button>
+              <a class="btn btn-primary" href="#howto">投票方法</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Candidate Card Sample 3 -->
+        <article class="card candidate" data-grade="1" data-position="書記" data-keywords="掲示 広報 SNS 透明性">
+          <div class="avatar" aria-hidden="true">C</div>
+          <div>
+            <h3 style="margin:0 0 4px">佐藤 光（1年）<small style="color:var(--muted); font-weight:400">／ 書記候補</small></h3>
+            <p style="margin:6px 0">議事録の即日公開と、SNSでの活動報告を徹底し、<strong>情報の透明性</strong>を高めます。</p>
+            <div class="tags"><span class="tag">透明性</span><span class="tag">掲示改善</span><span class="tag">SNS運用</span></div>
+            <div style="margin-top:8px; display:flex; gap:8px;">
+              <button class="btn btn-ghost" data-modal-open="sato">詳しく見る</button>
+              <a class="btn btn-primary" href="#howto">投票方法</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p style="color:var(--muted); margin-top:10px">※ 写真はダミーです。顔写真は学校の許可に従い掲載してください。</p>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule" aria-labelledby="sch-title">
+      <h2 id="sch-title">選挙スケジュール</h2>
+      <div class="card timeline">
+        <div class="row"><div>9/1(月)〜9/4(木)</div><div>ポスター掲示 &amp; 候補者受付</div></div>
+        <div class="row"><div>9/5(金)</div><div>立会演説会（体育館）</div></div>
+        <div class="row"><div>9/8(月)〜9/12(金)</div><div>ホームルーム討論会</div></div>
+        <div class="row"><div>9/20(金)</div><div><strong>投票（LHR）</strong>・即日開票</div></div>
+      </div>
+    </section>
+
+    <!-- Rules -->
+    <section id="rules" aria-labelledby="rules-title">
+      <h2 id="rules-title">選挙ルール（抜粋）</h2>
+      <div class="card">
+        <ol class="list">
+          <li>買収・物品配布などの禁止行為をしない（文房具・お菓子等の配布は禁止）。</li>
+          <li>掲示物は指定の場所・サイズを守る。無断掲示・貼替えは禁止。</li>
+          <li>校内放送・SNSの利用は生徒会顧問の許可を得る。</li>
+          <li>クラスや個人への誹謗中傷をしない。クリーンな選挙を心がける。</li>
+          <li>選挙運動は平日7:45〜18:00の範囲で行う。</li>
+        </ol>
+        <p style="color:var(--muted); margin-top:10px">※ 詳細は「選挙規程」を参照。違反があった場合は注意・失格となる場合があります。</p>
+      </div>
+    </section>
+
+    <!-- How to vote -->
+    <section id="howto" aria-labelledby="how-title">
+      <h2 id="how-title">投票方法</h2>
+      <div class="grid">
+        <div class="card">
+          <h3 style="margin-top:0">手順</h3>
+          <ol class="list">
+            <li>LHRで担任から<strong>投票用紙</strong>を受け取る。</li>
+            <li>会長・副会長・各役職の候補者名を記入（または所定のチェック）。</li>
+            <li>記入後、投票箱へ投函。<strong>消しゴム・修正は不可</strong>です。</li>
+            <li>開票は生徒会・選挙管理委員が実施し、放課後に掲示します。</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">持ち物・注意</h3>
+          <ul class="list">
+            <li>筆記用具（黒または青）。</li>
+            <li>欠席者は翌登校日に<strong>追選挙</strong>を実施。</li>
+            <li>困ったら、選挙管理委員または担任に声をかけてください。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">よくある質問</h2>
+      <details>
+        <summary>欠席した場合はどうなりますか？</summary>
+        <p>翌登校日に追選挙を行います。日程は掲示またはClassroomで案内します。</p>
+      </details>
+      <details>
+        <summary>投票は匿名ですか？</summary>
+        <p>はい。投票内容が個人に紐づくことはありません。</p>
+      </details>
+      <details>
+        <summary>立会演説会で質問はできますか？</summary>
+        <p>時間の範囲で可能です。事前に学級で質問を整理し、代表者が行います。</p>
+      </details>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">問い合わせ</h2>
+      <div class="card">
+        <p>選挙管理委員会（担当：□□ 先生）</p>
+        <p>メール：<a href="mailto:senkoiinkai@example.jp">senkoiinkai@example.jp</a>／校内内線：123</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 〇〇高等学校 生徒会選挙管理委員会</p>
+    </footer>
+  </main>
+
+  <!-- Candidate Detail Modals -->
+  <div class="modal-backdrop" id="modal-aoyama" role="dialog" aria-modal="true" aria-label="青山 葵の公約詳細">
+    <div class="modal">
+      <div class="body">
+        <button class="btn btn-ghost close" data-modal-close>✖</button>
+        <h3>青山 葵（3年）／ 会長候補</h3>
+        <h4>主な公約</h4>
+        <ul class="list">
+          <li>文化祭の出展枠を20%拡大。企画審査の透明化とフィードバックを導入。</li>
+          <li>校内Wi‑Fiの死角調査と改善要望の提出、ポータルから状況公開。</li>
+          <li>清掃当番表のアプリ化実証実験（希望クラスより）。</li>
+        </ul>
+        <h4>実績</h4>
+        <ul class="list">
+          <li>図書委員長として自習室予約のオンライン化を提案・実装（2024）。</li>
+          <li>地域清掃ボランティアを学年横断で企画（参加者120名）。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modal-ikeda" role="dialog" aria-modal="true" aria-label="池田 晴の公約詳細">
+    <div class="modal">
+      <div class="body">
+        <button class="btn btn-ghost close" data-modal-close>✖</button>
+        <h3>池田 晴（2年）／ 副会長候補</h3>
+        <h4>主な公約</h4>
+        <ul class="list">
+          <li>部活動交流戦（年2回）を生徒会主催で開催し、競技・文化の垣根を超えた交流を推進。</li>
+          <li>防災訓練の見直し：放課後クラブ活動中の動線確認を追加。</li>
+          <li>朝の挨拶運動を全学年ローテーションで実施。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modal-sato" role="dialog" aria-modal="true" aria-label="佐藤 光の公約詳細">
+    <div class="modal">
+      <div class="body">
+        <button class="btn btn-ghost close" data-modal-close>✖</button>
+        <h3>佐藤 光（1年）／ 書記候補</h3>
+        <h4>主な公約</h4>
+        <ul class="list">
+          <li>議事録を翌日までに掲示・ポータル公開。</li>
+          <li>活動報告の月次ダイジェストをSNSと掲示板に掲載。</li>
+          <li>目安箱の匿名フォーム化。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('theme');
+    const setTheme = (mode) => {
+      if(mode === 'dark') document.documentElement.setAttribute('data-theme','dark');
+      else document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', mode);
+      themeBtn.setAttribute('aria-pressed', mode === 'dark');
+    };
+    setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark'));
+
+    // Filters
+    const search = document.getElementById('search');
+    const gradeFilter = document.getElementById('gradeFilter');
+    const positionFilter = document.getElementById('positionFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const items = Array.from(document.querySelectorAll('#candidateGrid .candidate'));
+
+    function applyFilters(){
+      const q = search.value.trim().toLowerCase();
+      const g = gradeFilter.value;
+      const p = positionFilter.value;
+      items.forEach(card => {
+        const matchQ = !q || card.textContent.toLowerCase().includes(q) || (card.dataset.keywords||'').toLowerCase().includes(q);
+        const matchG = !g || card.dataset.grade === g;
+        const matchP = !p || card.dataset.position === p;
+        card.style.display = (matchQ && matchG && matchP) ? '' : 'none';
+      });
+    }
+    search.addEventListener('input', applyFilters);
+    gradeFilter.addEventListener('change', applyFilters);
+    positionFilter.addEventListener('change', applyFilters);
+    clearFilters.addEventListener('click', ()=>{ search.value=''; gradeFilter.value=''; positionFilter.value=''; applyFilters(); });
+
+    // Modals
+    const openButtons = document.querySelectorAll('[data-modal-open]');
+    const closeButtons = document.querySelectorAll('[data-modal-close]');
+
+    function openModal(id){
+      const el = document.getElementById('modal-'+id);
+      if(!el) return;
+      el.style.display = 'grid';
+      document.body.style.overflow = 'hidden';
+      el.addEventListener('click', (e)=>{ if(e.target === el) closeModal(el); }, { once: true });
+      const close = el.querySelector('[data-modal-close]');
+      close.focus();
+    }
+    function closeModal(el){ el.style.display='none'; document.body.style.overflow = ''; }
+
+    openButtons.forEach(btn => btn.addEventListener('click', ()=> openModal(btn.getAttribute('data-modal-open'))));
+    closeButtons.forEach(btn => btn.addEventListener('click', ()=> closeModal(btn.closest('.modal-backdrop'))));
+
+    // Keyboard accessibility for modals (Esc)
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        document.querySelectorAll('.modal-backdrop').forEach(el=>{ if(el.style.display==='grid') closeModal(el); });
+      }
+    });
+  </script>
+</body>
+</html>
